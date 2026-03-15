@@ -38,33 +38,27 @@ review = st.text_area("Enter an Amazon review")
 
 if st.button("Analyze Sentiment"):
 
-    if review.strip() != "":
+if review.strip() != "":
 
-        # -------------------------------
-        # Sentiment prediction
-        # -------------------------------
+    # Sentiment prediction
+    result = sentiment_pipeline(review)[0]
 
-        result = sentiment_pipeline(review)[0]
+    label_map = {
+        "LABEL_0": "Negative",
+        "LABEL_1": "Positive"
+    }
 
-label_map = {
-    "LABEL_0": "Negative",
-    "LABEL_1": "Positive"
-}
+    sentiment = label_map.get(result["label"], result["label"])
+    sentiment_confidence = result["score"]
 
-sentiment = label_map.get(result["label"], result["label"])
-sentiment_confidence = result["score"]
+    # Category prediction
+    category_result = category_pipeline(
+        review,
+        candidate_labels=categories
+    )
 
-        # -------------------------------
-        # NEW: Category prediction
-        # -------------------------------
-
-        category_result = category_pipeline(
-            review,
-            candidate_labels=categories
-        )
-
-        category = category_result["labels"][0]
-        category_confidence = category_result["scores"][0]
+    category = category_result["labels"][0]
+    category_confidence = category_result["scores"][0]
 
         # -------------------------------
         # Display results
