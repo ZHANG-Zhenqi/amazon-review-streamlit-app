@@ -46,8 +46,13 @@ if st.button("Analyze Sentiment"):
 
         result = sentiment_pipeline(review)[0]
 
-        sentiment = result["label"]
-        sentiment_confidence = result["score"]
+label_map = {
+    "LABEL_0": "Negative",
+    "LABEL_1": "Positive"
+}
+
+sentiment = label_map.get(result["label"], result["label"])
+sentiment_confidence = result["score"]
 
         # -------------------------------
         # NEW: Category prediction
