@@ -16,7 +16,7 @@ sentiment_pipeline = pipeline(
 
 category_pipeline = pipeline(
     "zero-shot-classification",
-    model="facebook/bart-large-mnli"
+    model="typeform/distilbert-base-uncased-mnli"
 )
 
 categories = [
